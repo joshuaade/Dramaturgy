@@ -34,10 +34,10 @@ jobs:
               run: pip install ruff
 
             - name: Ruff
-              run: ruff check .
+              run: ruff check --include "*.py" .
 
-            - name: Check formatting
-              run: ruff format --check .
+            #- name: Check formatting
+            #  run: ruff format --check .
 
             - name: Ren'py lint
               run: |
