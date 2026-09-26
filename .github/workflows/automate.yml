@@ -1,0 +1,54 @@
+name: automate
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.11"
+
+            - name: Download Ren'py 8.5.3
+              run: |
+                wget https://www.renpy.org/dl/release/renpy-8.5.3-sdk.tar.bz2
+                tar -xjf renpy-8.5.3-sdk.tar.bz2
+
+            - name: Check Ren'py version
+              run: |
+                ./renpy-8.5.3-sdk/renpy.sh --version
+
+            - name: Install Ruff
+              run: pip install ruff
+
+            - name: Ruff
+              run: ruff check .
+
+            - name: Check formatting
+              run: ruff format --check .
+
+            - name: Ren'py lint
+              run: |
+                ./renpy-8.5.3-sdk/renpy.sh . lint \
+                --error-code \
+                --all-problems \
+                --reserved-parameters \
+                --check-unclosed-tags
+            
+            
+
+            
+
+        
