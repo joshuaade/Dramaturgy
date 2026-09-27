@@ -1,0 +1,28 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          clean: true
+
+      - name: Run RenPy CI
+        uses: KagariSoft/renpy-ci@v1
+        with:
+          renpy-version: '8.5.3'
+          game-dir: '.'
+          lint: 'true'
+          compile: 'true'
+          build: 'true'
+          upload-artifact: 'true'
+          artifact-name: 'my-game-build'
+
+          

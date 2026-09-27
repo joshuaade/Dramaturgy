@@ -1,0 +1,24 @@
+name: Deploy to itch.io
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy-itch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          clean: true
+
+      - name: Publish to itch.io
+        uses: KagariSoft/renpy-ci@v1
+        with:
+          renpy-version: '8.5.3'
+          game-dir: '.'
+          publish-itch: 'true'
+          itch-target: ${{ secrets.BUTLER_USER_SLASH_GAME }}
+          butler-key: ${{ secrets.BUTLER_API_KEY }}
