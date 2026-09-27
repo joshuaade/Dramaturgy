@@ -47,18 +47,37 @@ jobs:
         run: |
           cd "$RENPY_SDK_DIR"
           ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \
-          --destination "$RUNNER_TEMP/web"
+          --destination "$RENPY_DIST_PATH/web"
 
       - name: Inspect web build
         run: |
-          find "$RUNNER_TEMP/renpy-web" -maxdepth 3 -print
+          echo "=== RENPY_DIST_PATH ==="
+          echo "$RENPY_DIST_PATH"
+
+          echo "=== Web directory ==="
+          find "$RENPY_DIST_PATH/web" -maxdepth 3 -print
+
+          echo "=== ZIP files ==="
+          find "$RENPY_DIST_PATH/web" -type f -name '*.zip' -print
+
+          echo "=== HTML files ==="
+          find "$RENPY_DIST_PATH/web" -type f -name '*.html' -print
+
+      - name: Inspect game.zip
+        run: |
+          GAME_ZIP="$RENPY_DIST_PATH/web/game.zip"
+
+          if [ ! -f "$GAME_ZIP" ]; then
+            echo "game.zip not found!"
+            exit 1
+          fi
+
+          echo "game.zip file count:"
+          unzip -Z1 "$GAME_ZIP" | wc -l
 
       - name: Upload web build
         run: |
-          butler push \
-          "$RUNNER_TEMP/renpy-web/game.zip" \
-          ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5 \
-          --userversion "${{ github.ref_name }}"
+          find "$RENPY_DIST_PATH/web" -maxdepth 3 -print 
         
         env:
             BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
