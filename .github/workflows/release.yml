@@ -50,8 +50,9 @@ jobs:
 
       - name: Upload web build
         run: |
-          butler push \
-          "$RENPY_DIST_PATH/web/Dramaturgy-1.0-web.zip" \
+          echo "=== Web build ==="
+          find "$RENPY_DIST_PATH/web" -maxdepth 4 -print
+
           ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5
         
         env:
