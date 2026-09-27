@@ -38,18 +38,12 @@ jobs:
           butler-key: ${{ secrets.BUTLER_API_KEY }}
 
       - name: Install Ren'py web support
-        working-directory: ${{ runner.temp }}
         run: |
           wget https://www.renpy.org/dl/release/renpy-8.5.3-web.zip
           unzip -q renpy-8.5.3-web.zip -d "$RENPY_SDK_DIR"
-        env:
-          RENPY_DIST_PATH: ${{ runner.temp }}/renpy-dists
-          RENPY_SDK_DIR: ${{ runner.temp }}/renpy-8.5.3-sdk
 
       - name: Build web
         run: |
-          rm -rf "$RENPY_DIST_PATH"
-          mkdir -p "$RENPY_DIST_PATH"
           cd "$RENPY_SDK_DIR"
           ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \ 
           --destination "$RENPY_DIST_PATH/web"
