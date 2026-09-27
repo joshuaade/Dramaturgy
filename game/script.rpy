@@ -4,7 +4,7 @@
 # name of the character.
 
 define e = Character("Eileen")
-
+image plasticbag = "plasticbag.png"
 
 # The game starts here.
 
@@ -24,11 +24,21 @@ label start:
 
     # These display lines of dialogue.
 
+    play music "ConceptThemeWIP.mp3"
+
     e "You've created a new Ren'Py game."
 
     e "Once you add a story, pictures, and music, you can release it to the world!"
 
-    e "Web browser test"
+    e "Do you ever feel like:"
+
+    show plasticbag at left with dissolve
+    show plasticbag at center with dissolve
+    show plasticbag at right with dissolve
+
+    e "End"
+
+    hide plasticbag at right
 
     # This ends the game.
 
