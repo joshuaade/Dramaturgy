@@ -40,5 +40,14 @@ jobs:
 
       - name: Build web
         run: |
-          ./renpy-8.5.3-sdk/renpy.sh launcher web_build . \
-          --destination ./web-build
+          "$RENPY_SDK_DIR/renpy.sh" launcher web_build . \
+          --destination "$RENPY_DIST_PATH/web"
+
+      - name: Upload web build
+        run: |
+          butler push \
+          $RENPY_DIST_PATH/web/Dramaturgy-1.0-web" \
+          ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5
+        
+        env:
+            BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
