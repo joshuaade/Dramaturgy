@@ -51,17 +51,19 @@ jobs:
 
       - name: Inspect web build
         run: |
-          echo "=== RENPY_DIST_PATH ==="
-          echo "$RENPY_DIST_PATH"
+           WEB_ZIP="$RENPY_DIST_PATH/web.zip"
 
-          echo "=== Web directory ==="
-          find "$RENPY_DIST_PATH/web" -maxdepth 3 -print
+           echo "=== Web ZIP ==="
+           ls -lh "$WEB_ZIP"
 
-          echo "=== ZIP files ==="
-          find "$RENPY_DIST_PATH/web" -type f -name '*.zip' -print
+           echo "=== File count ==="
+           unzip -Z1 "$WEB_ZIP" | wc -l
 
-          echo "=== HTML files ==="
-          find "$RENPY_DIST_PATH/web" -type f -name '*.html' -print
+           echo "=== Contents ==="
+           unzip -Z1 "$WEB_ZIP" | head -50
+
+           echo "=== index.html ==="
+           unzip -Z1 "$WEB_ZIP" | grep -E '(^|/)index\.html$'
 
       - name: Inspect game.zip
         run: |
