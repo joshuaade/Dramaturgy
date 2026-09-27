@@ -56,3 +56,15 @@ jobs:
         
         env:
             BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      - name: Analyze web ZIP
+        run: |
+          WEB_ZIP="$RENPY_DIST_PATH/web/game.zip"
+
+          echo "=== File count ==="
+          unzip -Z1 "$WEB_ZIP" | wc -l
+
+          echo "=== Files by top-level directory ==="
+          unzip -Z1 "$WEB_ZIP" | awk -F/ '{print $1}' | sort | uniq -c | sort -nr
+
+          echo "=== Game files ==="
+          unzip -Z1 "$WEB_ZIP" | grep '^game/' | head -100
