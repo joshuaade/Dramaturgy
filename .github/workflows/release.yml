@@ -50,9 +50,8 @@ jobs:
 
       - name: Upload web build
         run: |
-          echo "=== Web build ==="
-          find "$RENPY_DIST_PATH/web" -maxdepth 4 -print
-
+          butler push \
+          "$RENPY_DIST_PATH/web/game.zip" \
           ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5
         
         env:
