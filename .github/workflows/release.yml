@@ -79,7 +79,10 @@ jobs:
 
       - name: Upload web build
         run: |
-          find "$RENPY_DIST_PATH/web" -maxdepth 3 -print 
+          butler push \
+          "$RENPY_DIST_PATH/web.zip" \
+          "${{ secrets.BUTLER_USER_SLASH_GAME }}:html5"
+          --userversion "${{ github.ref_name }}"
         
         env:
             BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
