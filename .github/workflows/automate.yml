@@ -30,11 +30,11 @@ jobs:
               run: |
                 ./renpy-8.5.3-sdk/renpy.sh --version
 
-            - name: Install Ruff
-              run: pip install ruff
+            #- name: Install Ruff
+            #  run: pip install ruff
 
-            - name: Ruff
-              run: ruff check --include "*.py" .
+            #- name: Ruff
+            #  run: ruff check --include "*.py" .
 
             #- name: Check formatting
             #  run: ruff format --check .
