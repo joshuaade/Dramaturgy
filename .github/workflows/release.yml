@@ -51,7 +51,7 @@ jobs:
       - name: Upload web build
         run: |
           butler push \
-          $RENPY_DIST_PATH/web/Dramaturgy-1.0-web" \
+          "$RENPY_DIST_PATH/web/Dramaturgy-1.0-web.zip" \
           ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5
         
         env:
