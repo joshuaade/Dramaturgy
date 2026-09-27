@@ -45,7 +45,7 @@ jobs:
       - name: Build web
         run: |
           cd "$RENPY_SDK_DIR"
-          ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \ 
+          ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \
           --destination "$RENPY_DIST_PATH/web"
 
       - name: Inspect web build
