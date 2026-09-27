@@ -38,6 +38,7 @@ jobs:
           butler-key: ${{ secrets.BUTLER_API_KEY }}
 
       - name: Install Ren'py web support
+        working-directory: ${{ runner.temp }}
         run: |
           wget https://www.renpy.org/dl/release/renpy-8.5.3-web.zip
           unzip -q renpy-8.5.3-web.zip -d "$RENPY_SDK_DIR"
@@ -46,16 +47,27 @@ jobs:
         run: |
           cd "$RENPY_SDK_DIR"
           ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \
-          --destination "$RENPY_DIST_PATH/web"
+          --destination "$RUNNER_TEMP/web"
+
+      - name: Inspect web build
+        run: |
+          find "$RUNNER_TEMP/renpy-web" -maxdepth 3 -print
 
       - name: Upload web build
         run: |
           butler push \
-          "$RENPY_DIST_PATH/web/game.zip" \
-          ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5
+          "$RUNNER_TEMP/renpy-web/game.zip" \
+          ${{ secrets.BUTLER_USER_SLASH_GAME }}:html5 \
+          --userversion "${{ github.ref_name }}"
         
         env:
             BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+      - name: Check project for build artifacts
+        run: |
+          echo "=== Project root ==="
+          find "$GITHUB_WORKSPACE" -maxdepth 2 -type f -print
+
       - name: Analyze web ZIP
         run: |
           WEB_ZIP="$RENPY_DIST_PATH/web/game.zip"
