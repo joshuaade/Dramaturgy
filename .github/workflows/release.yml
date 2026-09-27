@@ -42,9 +42,20 @@ jobs:
           wget https://www.renpy.org/dl/release/renpy-8.5.3-web.zip
           unzip -q renpy-8.5.3-web.zip -d "$RENPY_SDK_DIR"
 
+      - name: Inspect Ren'py SDK
+        run: |
+          echo "SDK: $RENPY_SDK_DIR"
+          echo "Workspace: $GITHUB_WORKSPACE"
+          pwd
+          ls -la "$RENPY_SDK_DIR"
+          echo "--- renpy.sh ---"
+          head -30 "$RENPY_SDK_DIR/renpy.sh"
+          echo "--- version ---"
+          "$RENPY_SDK_DIR/renpy.sh" --version
+
       - name: Build web
         run: |
-          "$RENPY_SDK_DIR/renpy.sh" launcher web_build "$GITHUB_WORKSPACE" \
+          python "$RENPY_SDK_DIR/renpy.py" launcher web_build "$GITHUB_WORKSPACE" \
           --destination "$RENPY_DIST_PATH/web"
 
       - name: Upload web build
