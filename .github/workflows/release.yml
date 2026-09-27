@@ -7,6 +7,18 @@ on:
 
 jobs:
   deploy-itch:
+    strategy:
+        matrix:
+            include:
+                - package: win
+                  channel: win
+
+                - package: mac
+                  channel: osx
+
+                - package: linux
+                  channel: linux
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,6 +31,14 @@ jobs:
         with:
           renpy-version: '8.5.3'
           game-dir: '.'
+          package: ${{ matrix.package }}
           publish-itch: 'true'
           itch-target: ${{ secrets.BUTLER_USER_SLASH_GAME }}
+          itch-channel: ${{ matrix.channel }}
           butler-key: ${{ secrets.BUTLER_API_KEY }}
+
+
+      - name: Build web
+        run: |
+          ./renpy-8.5.3-sdk/renpy.sh launcher web_build . \
+          --destination ./web-build
