@@ -81,7 +81,7 @@ jobs:
         run: |
           butler push \
           "$RENPY_DIST_PATH/web.zip" \
-          "${{ secrets.BUTLER_USER_SLASH_GAME }}:html5"
+          "${{ secrets.BUTLER_USER_SLASH_GAME }}:html5" \
           --userversion "${{ github.ref_name }}"
         
         env:
