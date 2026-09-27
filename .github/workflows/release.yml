@@ -37,10 +37,14 @@ jobs:
           itch-channel: ${{ matrix.channel }}
           butler-key: ${{ secrets.BUTLER_API_KEY }}
 
+      - name: Install Ren'py web support
+        run: |
+          wget https://www.renpy.org/dl/release/renpy-8.5.3-web.zip
+          unzip -q renpy-8.5.3-web.zip -d "$RENPY_SDK_DIR"
 
       - name: Build web
         run: |
-          "$RENPY_SDK_DIR/renpy.sh" launcher web_build . \
+          "$RENPY_SDK_DIR/renpy.sh" launcher web_build "$GITHUB_WORKSPACE" \
           --destination "$RENPY_DIST_PATH/web"
 
       - name: Upload web build
