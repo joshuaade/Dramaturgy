@@ -37,6 +37,10 @@ jobs:
           itch-channel: ${{ matrix.channel }}
           butler-key: ${{ secrets.BUTLER_API_KEY }}
 
+        env:
+          RENPY_DIST_PATH: ${{ runner.temp }}/renpy-dists
+          RENPY_SDK_DIR: ${{ runner.temp }}/renpy-8.5.3-sdk
+
       - name: Install Ren'py web support
         working-directory: ${{ runner.temp }}
         run: |
@@ -45,8 +49,10 @@ jobs:
 
       - name: Build web
         run: |
+          rm -rf "$RENPY_DIST_PATH"
+          mkdir -p "$RENPY_DIST_PATH"
           cd "$RENPY_SDK_DIR"
-          ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \
+          ./renpy.sh launcher web_build "$GITHUB_WORKSPACE" \ 
           --destination "$RENPY_DIST_PATH/web"
 
       - name: Inspect web build
@@ -62,8 +68,13 @@ jobs:
            echo "=== Contents ==="
            unzip -Z1 "$WEB_ZIP" | head -50
 
-           echo "=== index.html ==="
-           unzip -Z1 "$WEB_ZIP" | grep -E '(^|/)index\.html$'
+           echo "=== Checking for accidental build output ==="
+           if unzip -Z1 "$WEB_ZIP" | grep -q 'Dramaturgy-1.0-dists'; then
+             echo "ERROR: Build output was accidentally included in Web ZIP!"
+             exit 1
+           fi
+
+           echo "Web build looks clean."
 
       - name: Inspect game.zip
         run: |
