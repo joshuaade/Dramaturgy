@@ -13,6 +13,7 @@ class card:
 
 
 def generate_list():
+    card_list = []
     while len(card_list) < 7: # Somehow tie this to renpy thing, possibly put it in card class?
         new_card = card("test", random.choice(card_types), random.randint(0,3), random.randint(-3,3))
         card_list.append(new_card)

@@ -32,7 +32,8 @@ screen card_display():
                     ypos 0.5
                     drag_raise True
                     draggable True
-                    frame:
+                    
+                    frame at move_card:
                         xalign 0.0
                         yalign 0.0
                         vbox:
@@ -40,6 +41,13 @@ screen card_display():
                             text "Energy: [display_card.energy]"
                             text "Audience: [display_card.audience]"
             $ slot += 1/7
+
+transform move_card:
+    zoom 1.0
+    on hover:
+        linear 0.25 zoom 1.3
+    on idle:
+        linear 0.25 zoom 1.0
         
 
 # The game starts here.
@@ -133,7 +141,7 @@ label Choice_2:
 
 label play_cards:
     show plasticbag at top with dissolve
-    $ card_list = (card.generate_list()) # Currently will not generate new set of cards each game (fixed at launching game)
+    $ card_list = (card.generate_list())
     show screen stats_screen()
     show screen card_display()
     pause
