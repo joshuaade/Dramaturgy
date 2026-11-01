@@ -11,6 +11,7 @@ image plasticbag = "plasticbag.png"
 image good_end = "stronk.jpg"
 image bad_end = "patrickrock.png"
 image game_over = "game_over.jpg"
+image comedy_card = "Comedy_Plot_Card.png"
 
 
 default tst = 0 # variable for testing
@@ -38,7 +39,7 @@ screen card_display(): # make button that when pressed, will check for None obje
                     ypos 0.75
                     draggable False
                     drag_name "slot%s" % str(i + 1)
-                    image Solid("#fff") xysize(100,100)
+                    image Solid("#181313") xysize(100,100)
 
             for display_card in card_list:
                 #$ drag_list = [display_card, card_list.index(display_card)]
@@ -55,7 +56,9 @@ screen card_display(): # make button that when pressed, will check for None obje
                     
                     if display_card is not None:
                         frame at move_card:
-                            
+                            if display_card.type == "plot":
+                                xysize 240, 240
+                                background Frame("Comedy_Plot_Card.png")
                             xalign 0.0
                             yalign 0.0        
                             vbox:
@@ -75,8 +78,9 @@ screen card_display(): # make button that when pressed, will check for None obje
                 #child At("plasticbag.png", move_card)
                 align(0.5, 0.5)
                 draggable False
+                #dropped card.test
                 drag_name "use"
-                image Solid("#fff") xysize(100,100)
+                image Solid("#575757") xysize(100,100)
 
         frame:
             align(0.25, 1.0)
@@ -201,7 +205,7 @@ label Choice_2:
     jump start
     return
 
-label play:
+label play: # When play button pressed
     $ card.play_card()
     if audience <= 0:
         jump game_over
@@ -212,11 +216,12 @@ label play:
         jump bad_end
     return
 
-label play_cards:
+label play_cards: # Sets out cards
     show plasticbag at top with dissolve
     $ card_list = (card.generate_list())
     show screen stats_screen
     show screen card_display
+    #$ print(renpy.get_showing_tags())
     hide plasticbag
     pause 
     return
