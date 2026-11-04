@@ -20,15 +20,24 @@ class Card:
         self.audience = audience
         self.plot = plot_point
 
+    def play(self): # Polymorphism
+        pass
+
 # TODO:Implement inheritance by making subclasses of card for each cardtype
-class PlotCard(Card):
-    pass
+class PlotCard(Card): # These do not know what current_played_card are
+    def play(self):
+        store.energy -= current_played_card.energy
+        store.ending = current_played_card.plot
 
 class BuffCard(Card):
-    pass
+    def play(self):
+        store.energy -= current_played_card.energy
+        
+        
 
 class ThirdCard(Card):
-    pass
+    def play(self):
+        store.energy -= current_played_card.energy
 
 def generate_list():
     global card_list

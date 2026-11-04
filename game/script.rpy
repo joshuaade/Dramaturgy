@@ -7,10 +7,18 @@ init python:
 
 define d = Character("Dramaturgy")
 define a = Character("Alcaeus")
+define mom = Character("Alcaeus's Mother")
+define dad = Character("Alcaeus's Father")
+define statue = Character("Voice of the Statue")
+define s1 = Character("Pausidio")
+define s2 = Character("Marilis")
+
+
 image plasticbag = "plasticbag.png"
 image good_end = "stronk.jpg"
 image bad_end = "patrickrock.png"
 image game_over = "game_over.jpg"
+
 image comedy_card = "Comedy_Plot_Card.png"
 
 
@@ -232,11 +240,75 @@ label no_cards:
     jump start
     return
 
+# Game paths, letter is fate momements and number is which choice made
+label a1:
+    hide screen card_display
+    hide screen stats_screen
+    d "Alcaeus grit his teeth as he struggled against the rock. Debris crumbled around him as it shifted under his strength. With a mighty shove, the rock flew."
+    d "He rushed over to his parents, lifting the rocks covering them, before rushing them out of the still crumbling house."
+    a "Are you alright, Mama? Baba?"
+    mom "We are, thanks to you."
+    dad "Thank you, son."
+    a "I’m just so glad you’re safe. I have no clue how I did that."
+    d "Alcaeus’s mother and father shared a look."
+    dad "Alcaeus, the truth is that when you were a baby, we found you in a distant wheat field. We raised you as our own. But, maybe this strength in you comes from your birth parents."
+    a "But, who could it be? What happened to my birth parents?"
+    dad "We don’t know unfortunately. But, maybe the Temple of Knowledge would have answers."
+    a "Then, I have to go."
+    mom "We understand. And we’ll always support you, Alcaeus."
+    d "Alcaeus hugged them"
+    a "Thank you. No matter what, you will always be my mama and baba."
+    d "Alcaeus packed whatever food and water they could salvage and then headed off towards the Temple of Knowledge. He traveled for a day and night until he found the torches outside the temple shining at the top of the hill."
+    d "Heading inside, Alcaeus stopped in front of a giant statue of a man."
+    statue "Welcome, Alcaeus"
+    a "Woah! How did you know my name?"
+    statue "I have knowledge of all people in this world, my boy."
+    a "Can you… Do you know who I am, then?"
+    statue "I do. But, I cannot tell you yet."
+    a "Is there something I need to do?"
+    statue "In order to reveal the truth of your past, you must first become a true hero."
+    a "A true hero..."
+    statue "Go to insert city name. There you will find Pausidio. He will guide you."
+    d "And so Alcaeus set off for insert city name. There he found a training ground for warriors."
+    a "Greetings. My name is Alcaeus. Are you Sir Pausidio?"
+    s1 "That is correct, young one. How may I assist you?"
+    a "The Temple of Knowledge has guided me here. He said I need to become a true hero before I can obtain the knowledge I seek."
+    s1 "You have come to the right place then, Alcaeus. I have trained many young warriors in my time. "
+    d "Thus, Alcaeus’s training began. He rescued nearby villages by defeating various monsters. From small harpies and gargoyles. To even a minotaur. The townspeople he helped spread his name far and wide."
+    s2 "Thank you, Hero Alcaeus. We can finally begin to rebuild our town thanks to you relinquishing us of the minotaur."
+    a "It’s no trouble at all, I’m glad I could help!"
+    s2 "Where are you heading to next?"
+    a "I think I will head to the Temple of Knowledge."
+    d "Once again, Alcaeus found himself at the temple."
+    a "Greetings, O Wise Voice.  I ask if I may discover who my birth parents are now?"
+    statue "You still have not become a true hero, young Alcaeus."
+    a "But-"
+    d "A loud commotion came from outside the temple. Alcaeus ran back out, looking down into the valley. "
+    d "From a distance, he saw a large shadowy figure looming over the village. It looked draconic, or perhaps serpentine, in appearance. When it roared, the ground shook."
+    d "Alcaeus ran"
+    a "How did such a large monster appear so suddenly?"
+    d "Screams and cries from the villagers rang in his ears."
+    d "There, towering above him, was a creature with thick draconic scales and a long serpentine neck. Its menacing glare scoped around the town as it crushed anything underneath it."
+    d "An acrid smell permeated the air, forcing heaving coughs from aa"
+    s1 "Alcaeus!"
+    a "Teacher, what happened?"
+    s1 "The monster appeared as if made of darkness itself, Alcaeus!"
+    d "From further away, Alcaeus saw Marilis leading frantic villagers out of the premises. "
+    d "He turned back to the creature. "
+    jump play_cards
+    # TODO: Have some way to switch out plot points for second fate moment
+
+label a2:
+    pass
+
+label b1:
+    pass
+
+label b2:
+    pass
 # Game endings
 label good_end:
     play sound "yippeeeeeeeeeeeeee.mp3"
-    hide screen card_display
-    hide screen stats_screen
     show good_end at truecenter
     a "I very stronk"
     return
